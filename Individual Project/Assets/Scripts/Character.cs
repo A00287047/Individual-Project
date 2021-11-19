@@ -1,16 +1,22 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
+
 
 public class Character : MonoBehaviour
 {
- 
+    public int maxHealth = 5; public int curHealth = 5;
+
+    public float healthBarLength;
+
+    public Vector3 screenPosition;
 
     public KeyCode meleeAttackKey = KeyCode.Mouse0;
     public KeyCode jumpKey = KeyCode.Space;
     public string xMoveAxis = "Horizontal";
 
     public float speed = 5f;
-    public float jumpForce = 6f;
+    public float jumpForce = 12f;
     public float groundedLeeway = 0.1f;
 
     private Rigidbody2D rb2D = null;
@@ -35,6 +41,8 @@ public class Character : MonoBehaviour
 
     void Start()
     {
+        healthBarLength = Screen.width / 2;
+
         if (GetComponent<Rigidbody2D>())
         {
             rb2D = GetComponent<Rigidbody2D>();
@@ -47,10 +55,31 @@ public class Character : MonoBehaviour
 
     void Update()
     {
+        AddjustCurrentHealth(0);
         GetInput();
         HandleJump();
         HandleAttack();
         HandleAnimations();
+    }
+
+    void OnGUI()
+    {
+
+
+        screenPosition = Camera.main.WorldToScreenPoint(transform.position);
+        screenPosition.y = Screen.height - screenPosition.y;
+        GUI.Box(new Rect(screenPosition.x - 40, screenPosition.y - 120, healthBarLength, 20), curHealth + "/" + maxHealth);
+    }
+    public void AddjustCurrentHealth(int adj)
+    {
+        curHealth += adj;
+        if (curHealth <= 0)
+         SceneManager.LoadScene("GameOver");
+        if (curHealth > maxHealth)
+         curHealth = maxHealth;
+        if (maxHealth < 1)
+         maxHealth = 1;
+        healthBarLength = (Screen.width / 18) * (curHealth / (float)maxHealth);
     }
 
     void FixedUpdate()
@@ -63,7 +92,18 @@ public class Character : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Destroy(gameObject);
+            curHealth -= 1;
+            SoundManager.sndMan.PlayPlayerSound();
+        }
+
+        if (other.gameObject.CompareTag("DEATH"))
+        {
+            SceneManager.LoadScene("GameOver");
+        }
+
+        if (other.gameObject.CompareTag("Door"))
+        {
+            SceneManager.LoadScene("Complete");
         }
     }
 
@@ -75,6 +115,14 @@ public class Character : MonoBehaviour
             Destroy(other.gameObject);
             SoundManager.sndMan.PlayCoinSound();
             
+        }
+
+        if (other.gameObject.CompareTag("Health"))
+        {
+            curHealth += 1;
+            Destroy(other.gameObject);
+            SoundManager.sndMan.PlayHealthSound();
+
         }
     }
     private void OnDrawGizmosSelected()

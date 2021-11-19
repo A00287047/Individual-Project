@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Coins
   - Enemy
+  - Door
+  - DEATH
+  - Health
   layers:
   - Default
   - TransparentFX

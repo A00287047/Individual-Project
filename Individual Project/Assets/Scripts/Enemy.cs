@@ -72,6 +72,7 @@ public class Enemy : MonoBehaviour, Damage
         if (currentHealth <= 0)
         {
             Die();
+            SoundManager.sndMan.PlayEnemySound();
         }
     }
 

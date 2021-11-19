@@ -140,7 +140,7 @@ MonoBehaviour:
   jumpForce: 6
   groundedLeeway: 0.1
   player: {fileID: 363555214866132289, guid: cbdcc6903501edd44886ad64b6f9e861, type: 3}
-  agroRange: 4
+  agroRange: 5
   moveSpeed: 2
 --- !u!95 &3202957783557112468
 Animator:
