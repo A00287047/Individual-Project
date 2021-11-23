@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Character : MonoBehaviour
 {
-    public int maxHealth = 5; public int curHealth = 5;
+    public int maxHealth = 4; public int curHealth = 4;
 
     public float healthBarLength;
 
@@ -68,7 +68,7 @@ public class Character : MonoBehaviour
 
         screenPosition = Camera.main.WorldToScreenPoint(transform.position);
         screenPosition.y = Screen.height - screenPosition.y;
-        GUI.Box(new Rect(screenPosition.x - 40, screenPosition.y - 120, healthBarLength, 20), curHealth + "/" + maxHealth);
+        GUI.Box(new Rect(screenPosition.x - 40, screenPosition.y - 160, healthBarLength, 20), curHealth + "/" + maxHealth);
     }
     public void AddjustCurrentHealth(int adj)
     {

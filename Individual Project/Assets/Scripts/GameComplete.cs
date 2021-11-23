@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class GameComplete : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Loads main menu again after Game complete
     public void MainMenu()
     {
         SceneManager.LoadScene("MainMenu");
