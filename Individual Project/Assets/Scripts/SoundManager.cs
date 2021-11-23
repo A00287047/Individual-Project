@@ -17,7 +17,8 @@ public class SoundManager : MonoBehaviour
     private int randomEnemySound;
     private int randomPlayerSound;
     private int randomHealthSound;
-    // Start is called before the first frame update
+   
+    //Start loads all sounds from the resources folder and assigns them a value
     void Start()
     {
         sndMan = this;
@@ -29,6 +30,7 @@ public class SoundManager : MonoBehaviour
 
     }
 
+    // Each void mehod plays a random sound from Coin, Enemy, Player, or Health when invoked in other scripts
     public void PlayCoinSound()
     {
         randomCoinSound = Random.Range(0, 1);

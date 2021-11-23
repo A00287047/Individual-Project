@@ -62,6 +62,7 @@ public class Character : MonoBehaviour
         HandleAnimations();
     }
 
+    //OnGui draws the healtbar above Player
     void OnGUI()
     {
 
@@ -70,6 +71,8 @@ public class Character : MonoBehaviour
         screenPosition.y = Screen.height - screenPosition.y;
         GUI.Box(new Rect(screenPosition.x - 40, screenPosition.y - 160, healthBarLength, 20), curHealth + "/" + maxHealth);
     }
+
+    //Checks the value of current health and adjusts the health bar accordingly, changes scene to Gameover when health = 0
     public void AddjustCurrentHealth(int adj)
     {
         curHealth += adj;
@@ -88,6 +91,7 @@ public class Character : MonoBehaviour
         HandleRun();
     }
 
+    //Handles player death and game complete. Player dies instantly in a collision with "DEATH" and loses health on collision with "Enemy", plays PlayerSound. Both load GameOver. "Door" loads Complete. 
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Enemy"))
@@ -107,7 +111,7 @@ public class Character : MonoBehaviour
         }
     }
 
-
+    //Handles collision with coins and health. Destroys coin and plays CoinSound. Destroys Health and plays HealthSound.
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.CompareTag("Coins"))
@@ -125,6 +129,8 @@ public class Character : MonoBehaviour
 
         }
     }
+
+    //Helps me to visualise melee attack origin in scene
     private void OnDrawGizmosSelected()
     {
         Debug.DrawRay(transform.position, -Vector2.up * groundedLeeway, Color.green);
@@ -134,7 +140,7 @@ public class Character : MonoBehaviour
         }
     }
 
-
+    //Handles move, jumo, and attack
     private void GetInput()
     {
         moveIntentionX = Input.GetAxis(xMoveAxis);
@@ -142,6 +148,7 @@ public class Character : MonoBehaviour
         attemptJump = Input.GetKeyDown(jumpKey);
     }
 
+    //Checks for grounded, move, jump, and attack and changes animation accordingly
 private void HandleAnimations()
     {
         Animator.SetBool("Grounded", CheckGrounded());
@@ -170,6 +177,7 @@ private void HandleAnimations()
 
     }
 
+    //Delays melee attack animation to avoid spamming
     private IEnumerator MeleeAttackAnimDelay()
     {
         Animator.SetTrigger("Attack");
@@ -179,6 +187,7 @@ private void HandleAnimations()
 
     }
 
+    //Player movement
 private void HandleRun()
 
     {
@@ -194,7 +203,7 @@ private void HandleRun()
 
     }
 
-
+    //PLayer jump
     private void HandleJump()
     {
         if (attemptJump && CheckGrounded())
@@ -204,6 +213,7 @@ private void HandleRun()
 
     }
 
+    //Uses meleeAttackOrigin, meleeAttackRadius, enemyLayer, Damage, and meleeAttackDelay to Handle attack. Makes player attack and damage enemy.
     private void HandleAttack()
     {
         if (attemptMeleeAttack && timeUntilMeleeReaded <= 0)
@@ -227,7 +237,7 @@ private void HandleRun()
 
     }
 
-
+    //Checks if player is not jumping
     private bool CheckGrounded()
 
     {

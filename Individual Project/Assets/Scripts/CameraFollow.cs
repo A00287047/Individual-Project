@@ -8,7 +8,7 @@ public class CameraFollow : MonoBehaviour
     public float yOffset = 3f;
     public Transform target;
 
-    // Update is called once per frame
+    // Update makes the camera follow the target, which in our case is the player
     void Update()
     {
         Vector3 newPos = new Vector3(target.position.x, target.position.y + yOffset, -10f);

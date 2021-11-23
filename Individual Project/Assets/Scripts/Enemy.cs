@@ -31,7 +31,7 @@ public class Enemy : MonoBehaviour, Damage
 
     }
 
-    // Update is called once per frame
+    // Update checks for "distToPlayer" and invokes ChasePlayer/StopChasing when in range
     void Update()
     {
         float distToPlayer = Vector2.Distance(transform.position, player.position);
@@ -52,6 +52,7 @@ public class Enemy : MonoBehaviour, Damage
         rb2d.velocity = new Vector2(0, 0);
     }
 
+    //Changes the direction enemy is facing depending on where player is
     void ChasePlayer()
     {
         if(transform.position.x < player.position.x)
@@ -66,6 +67,7 @@ public class Enemy : MonoBehaviour, Damage
         }
     }
 
+    //Invokes Die when health = 0 + plays enemy death sound
     public virtual void ApplyDamage(float amount)
     {
         currentHealth -= amount;
@@ -76,6 +78,7 @@ public class Enemy : MonoBehaviour, Damage
         }
     }
 
+    //Destroys Enemy
     private void Die()
     {
         gameObject.SetActive(false);

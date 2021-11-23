@@ -17,6 +17,7 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
+    //Changes the score value at the top of screen
     public void ChangeScore(int coinValue)
     {
         score += coinValue;
